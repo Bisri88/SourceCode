@@ -1,0 +1,46 @@
+#include <Adafruit_NeoPixel.h>
+
+#define PINPixel1 11
+#define PINPixel2 6
+#define buzzer 3
+
+Adafruit_NeoPixel pixels1(1, PINPixel1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels2(1, PINPixel2, NEO_GRB + NEO_KHZ800);
+
+int tickPixel;
+
+void setup()
+{
+  Serial.begin(9600);
+  pixels1.begin();
+  pixels2.begin();
+  pinMode(buzzer, OUTPUT);
+}
+
+void sistem()
+{
+  tickPixel+=1;
+  if(tickPixel ==1)
+  {
+    tone(buzzer, 2000);
+    pixels1.setPixelColor(0, pixels1.Color(255, 0, 0));
+    pixels1.show();
+    pixels2.setPixelColor(0, pixels2.Color(0, 0, 255));
+    pixels2.show();
+  }
+  else if(tickPixel >=2)
+  {
+    tone(buzzer, 1000);
+    pixels2.setPixelColor(0, pixels2.Color(255, 0, 0));
+    pixels2.show();
+    pixels1.setPixelColor(0, pixels1.Color(0, 0, 255));
+    pixels1.show();
+    tickPixel = 0;
+  }
+}
+
+void loop()
+{
+  sistem();
+  delay(500);
+}
