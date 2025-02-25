@@ -1,0 +1,62 @@
+// C++ code
+//
+#include <Adafruit_NeoPixel.h>
+#define pirPin 11
+#define buzzer 6
+#define led 4
+#define PINPixel 3
+
+int valPir;
+bool chsPir;
+#define NUMPIXELS 4
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PINPixel, NEO_GRB + NEO_KHZ800);
+
+void setup()
+{
+  Serial.begin(9600);
+  pixels.begin();
+  pinMode(pirPin, INPUT);
+}
+
+void sistemReadPir()
+{
+  valPir = digitalRead(pirPin);
+  if(valPir == HIGH)
+  {
+    chsPir =true; 
+  }
+  else if(valPir == LOW)
+  {
+    chsPir =false; 
+  }
+}
+
+void sistemNotif()
+{
+  if(chsPir==true)
+  {
+    tone(buzzer, 1200);
+    pixels.setPixelColor(3, pixels.Color(255, 0, 0));
+    pixels.setPixelColor(2, pixels.Color(255, 0, 0));
+    pixels.setPixelColor(1, pixels.Color(0, 0, 255));
+    pixels.setPixelColor(0, pixels.Color(0, 0, 255));
+    pixels.show();
+    delay(250);
+    noTone(buzzer);
+    pixels.clear();
+    pixels.show();
+    delay(250);
+  }
+  else if(chsPir==false)
+  {
+    
+  }
+}
+
+void loop()
+{
+  sistemReadPir();
+  sistemNotif();
+  delay(250);
+}
