@@ -3,7 +3,6 @@
 #include <Adafruit_NeoPixel.h>
 #define pirPin 11
 #define buzzer 6
-#define led 4
 #define PINPixel 3
 
 int valPir;
@@ -47,10 +46,6 @@ void sistemNotif()
     pixels.clear();
     pixels.show();
     delay(250);
-  }
-  else if(chsPir==false)
-  {
-    
   }
 }
 
